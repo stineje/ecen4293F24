@@ -1,6 +1,174 @@
 import numpy as np
 
 
+def secant(f, x0, x1, Ea=1.e-7, maxit=30):
+    """
+    function to solve for the root of f(x) using the secant method
+    inputs:
+        f = name of f(x) function
+        x0 = initial guess
+        x1 = initial guess
+        Ea = relative error criterion
+        maxit = maximum number of iterations
+    outputs:
+        x2 = solution estimate for x
+        f(x2) = function value at the solution estimate
+        ea = relative error achieved
+        i+1 = number of iterations taken
+    """
+    for i in range(maxit):
+        x2 = x1-f(x1)/(f(x1)-f(x0))*(x1-x0)
+        ea = abs((x2-x1)/x2)
+        if ea < Ea:
+            break
+        x0 = x1
+        x1 = x2
+    return x2, f(x2), ea, i+1
+
+
+def modsec(f, x0, delta=1.e-5, Ea=1.e-7, maxit=30):
+    """
+    function to solve for the root of f(x) using the secant method
+    inputs:
+        f = name of f(x) function
+        x0 = initial guess
+        delta = perturbation fraction (default 1.e-5)
+        Ea = relative error criterion (default 1.e-7)
+        maxit = maximum number of iterations (default 30)
+    outputs:
+        x2 = solution estimate for x
+        f(x2) = function value at the solution estimate
+        ea = relative error achieved
+        i+1 = number of iterations taken
+    """
+    for i in range(maxit):
+        x1 = x0-f(x0)/(f((1+delta)*x0)-f(x0))*delta*x0
+        ea = abs((x1-x0)/x1)
+        if ea < Ea:
+            break
+        x0 = x1
+    return x1, f(x1), ea, i+1
+
+
+def wegstein(g, x0, x1, Ea=1.e-7, maxit=30):
+    """
+    This function solves x=g(x) using the Wegstein method.
+    The method is repeated until either the relative error
+    falls below Ea (default 1.e-7) or reaches maxit (default 30).
+    Input:
+        g = name of the function for g(x)
+        x0 = first initial guess for x
+        x1 = second initial guess for x
+        Ea = relative error threshold
+        maxit = maximum number of iterations
+    Output:
+        x2 = solution estimate
+        ea = relative error
+        i+1 = number of iterations
+    """
+    for i in range(maxit):
+        x2 = (x1*g(x0)-x0*g(x1))/(x1-x0-g(x1)+g(x0))
+        ea = abs((x1-x0)/x1)
+        if ea < Ea:
+            break
+        x0 = x1
+        x1 = x2
+    return x2, ea, i+1
+
+
+def newtraph(f, fp, x0, Ea=1.e-7, maxit=30):
+    """
+    This function solves f(x)=0 using the Newton-Raphson method.
+    The method is repeated until either the relative error
+    falls below Ea (default 1.e-7) or reaches maxit (default 30).
+    Input:
+        f = name of the function for f(x)
+        fp = name of the function for f'(x)
+        x0 = initial guess for x
+        Ea = relative error threshold
+        maxit = maximum number of iterations
+    Output:
+        x1 = solution estimate
+        f(x1) = equation error at solution estimate
+        ea = relative error
+        i+1 = number of iterations
+    """
+    for i in range(maxit):
+        x1 = x0 - f(x0)/fp(x0)
+        ea = abs((x1-x0)/x1)
+        if ea < Ea:
+            break
+        x0 = x1
+    return x1, f(x1), ea, i+1
+
+
+def brentmod(f, xl, xu, tol=1.e-7, maxit=30):
+    a = xl
+    b = xu
+    fa = f(a)
+    fb = f(b)
+    c = a
+    fc = fa
+    d = b - c
+    e = d
+    if f(xl)*f(xu) > 0:
+        print('initial guesses do not bracket solution')
+        return
+    for i in range(maxit):
+        if fb == 0:
+            break
+        if np.sign(fa) == np.sign(fb):  # rearrange points as req'd
+            a = c
+            fa = fc
+            d = b - c
+            e = d
+        if abs(fa) < abs(fb):
+            c = b
+            b = a
+            a = c
+            fc = fb
+            fb = fa
+            fa = fc
+        m = (a-b)/2  # termination test and possible exit
+        if abs(m) < tol or fb == 0:
+            break
+        # choose open methods or bisection
+        if abs(e) >= tol and abs(fc) > abs(fb):
+            s = fb/fc
+            if a == c:
+                # secant method here
+                p = 2*m*s
+                q = 1 - s
+            else:
+                # inverse quadratic interpolation here
+                q = fc/fa
+                r = fb/fa
+                p = s * (2*m*q*(q-r)-(b-c)*(r-1))
+                q = (q-1)*(r-1)*(s-1)
+            if p > 0:
+                q = -q
+            else:
+                p = -p
+            if 2*p < 3*m*q - abs(tol*q) and p < abs(0.5*e*q):
+                e = d
+                d = p/q
+            else:
+                d = m
+                e = m
+        else:
+            # bisection here
+            d = m
+            e = m
+        c = b
+        fc = fb
+        if abs(d) > tol:
+            b = b + d
+        else:
+            b = b - np.sign(b-a)*tol
+        fb = f(b)
+    return b, m, i+1
+
+
 def incsearch(func, xmin, xmax, ns=50):
     """
     incsearch: incremental search locator
