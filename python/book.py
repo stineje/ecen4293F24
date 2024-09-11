@@ -102,7 +102,8 @@ def newtraph(f, fp, x0, Ea=1.e-7, maxit=30):
     return x1, f(x1), ea, i+1
 
 
-def brentmod(f, xl, xu, tol=1.e-7, maxit=30):
+def brentsimp(f, xl, xu):
+    eps = np.finfo(float).eps
     a = xl
     b = xu
     fa = f(a)
@@ -111,10 +112,7 @@ def brentmod(f, xl, xu, tol=1.e-7, maxit=30):
     fc = fa
     d = b - c
     e = d
-    if f(xl)*f(xu) > 0:
-        print('initial guesses do not bracket solution')
-        return
-    for i in range(maxit):
+    while True:
         if fb == 0:
             break
         if np.sign(fa) == np.sign(fb):  # rearrange points as req'd
@@ -130,6 +128,7 @@ def brentmod(f, xl, xu, tol=1.e-7, maxit=30):
             fb = fa
             fa = fc
         m = (a-b)/2  # termination test and possible exit
+        tol = 2 * eps * max(abs(b), 1)
         if abs(m) < tol or fb == 0:
             break
         # choose open methods or bisection
@@ -166,7 +165,31 @@ def brentmod(f, xl, xu, tol=1.e-7, maxit=30):
         else:
             b = b - np.sign(b-a)*tol
         fb = f(b)
-    return b, m, i+1
+    return b
+
+
+def fixpt(g, x0, Ea=1.e-7, maxit=30):
+    """
+    This function solves x=g(x) using fixed-point iteration.
+    The method is repeated until either the relative error
+    falls below Ea (default 1.e-7) or reaches maxit (default 30).
+    Input:
+        g = name of the function for g(x)
+        x0 = initial guess for x
+        Ea = relative error threshold
+        maxit = maximum number of iterations
+    Output:
+        x1 = solution estimate
+        ea = relative error
+        i+1 = number of iterations
+    """
+    for i in range(maxit):
+        x1 = g(x0)
+        ea = abs((x1-x0)/x1)
+        if ea < Ea:
+            break
+        x0 = x1
+    return x1, ea, i+1
 
 
 def incsearch(func, xmin, xmax, ns=50):
