@@ -75,4 +75,3 @@ print("-" * 75)
 for method, data in results.items():
     print(
         f"{method:<10} {data['Root']:<15.15f} {data['Error']:<1.20e} {data['Iterations']:<10}")
-``
