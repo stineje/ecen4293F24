@@ -10,7 +10,7 @@ def f(x):
 
 
 # Find the root using Secant method
-result = root_scalar(f, method='secant', x0=-2, x1=2)
+result = root_scalar(f, method='secant', x0=1.5, x1=-1)
 
 # Plot the function and root
 x = np.linspace(-2, 6, 400)
