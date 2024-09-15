@@ -66,6 +66,7 @@ for i, (method, data) in enumerate(results.items()):
 
 # Adjust layout
 plt.tight_layout()
+plt.savefig('finding-roots.png')
 plt.show()
 
 # Print results in a tabular format
@@ -74,3 +75,4 @@ print("-" * 75)
 for method, data in results.items():
     print(
         f"{method:<10} {data['Root']:<15.15f} {data['Error']:<1.20e} {data['Iterations']:<10}")
+``
