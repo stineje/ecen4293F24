@@ -66,6 +66,7 @@ for i, (method, data) in enumerate(results.items()):
 
 # Adjust layout
 plt.tight_layout()
+plt.savefig('finding-roots.png')
 plt.show()
 
 # Print results in a tabular format
