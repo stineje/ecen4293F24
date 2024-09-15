@@ -30,7 +30,7 @@ methods = {
     'ridder': {'method': 'ridder', 'bracket': [-2, 2]},
     'toms748': {'method': 'toms748', 'bracket': [-2, 2]},
     'newton': {'method': 'newton', 'x0': 0, 'fprime': f_prime},
-    'secant': {'method': 'secant', 'x0': -2, 'x1': 2},
+    'secant': {'method': 'secant', 'x0': -1.5, 'x1': 1},
     'halley': {'method': 'halley', 'x0': 0, 'fprime': f_prime, 'fprime2': f_double_prime}
 }
 
