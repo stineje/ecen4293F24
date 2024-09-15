@@ -2,8 +2,6 @@ import numpy as np
 from scipy.optimize import root_scalar
 import matplotlib.pyplot as plt
 
-# Define the function and its derivative
-
 
 def f(x):
     return x**3 - 6*x**2 + 4*x + 12
