@@ -1,18 +1,17 @@
 import numpy as np
 from scipy.optimize import minimize
 
-# Define the function
-
 
 def f(x):
-    return (x - 3) ** 2
+    return x**3 - 6*x**2 + 4*x + 12
 
 
-# Initial guess
-starting_point = np.array([10.0])
+def objective(x):
+    return f(x)**2
+
 
 # Run SciPy's minimize function with method="CG" (Conjugate Gradient)
-result = minimize(f, starting_point, method='CG', tol=1e-6)
+result = minimize(objective, x0=0.0, method='CG', tol=1e-6)
 
 # Print the result
 print(f"The minimum is at x = {result.x[0]}")
