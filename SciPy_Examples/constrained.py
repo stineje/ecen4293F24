@@ -35,12 +35,12 @@ x_constraint = np.linspace(0, 10, 400)
 y_constraint = 0.5 * x_constraint + 4
 ax.plot(x_constraint, y_constraint, 'b-', linewidth=2, label='Constraint Line: $x_1 = 0.5x_0 + 4$')
 
+# Fill the infeasible region (below the constraint line)
+ax.fill_between(x_constraint, y_constraint, 0, where=(y_constraint > 0), color='red', alpha=0.3, label='Infeasible Region')
+
 # Set the font size for ticks
 plt.xticks(fontsize=16)
 plt.yticks(fontsize=16)
-
-# Add a legend
-plt.legend(['train', 'test'], fontsize=16)
 
 # Set figure size
 fig = plt.gcf()
@@ -67,6 +67,9 @@ optimal_x0, optimal_x1 = opt.x
 
 # Plot the solution on the contour plot
 ax.plot(optimal_x0, optimal_x1, 'ro', markersize=10, label='Optimal Solution with Constraint')
+
+# Add a text label for the infeasible region
+ax.text(5, 5, 'Infeasible', fontsize=20, color='black', ha='center')
 
 # Show the plot with the solution
 plt.legend()
