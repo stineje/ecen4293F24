@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize
+from mpl_toolkits.mplot3d import Axes3D  # Import 3D plotting toolkit
 
 # Define the range for the variables
 x0 = np.arange(0, 10, 0.25)
@@ -16,21 +17,15 @@ def objective_function(x):
 # Calculate cost using the meshgrid values
 cost = 0.4 * X0 ** 2 - 5 * X0 + X1 ** 2 - 6 * X1
 
-# Create a plot
+# Create a 2D contour plot
 fig, ax = plt.subplots(1, 1)
 
 # Plot the contour of the cost function
 cp = ax.contour(X0, X1, cost, levels=20)
 
-# Optionally add a color bar to the plot
-# fig.colorbar(cp) 
-
 # Set the font size for ticks
 plt.xticks(fontsize=16)
 plt.yticks(fontsize=16)
-
-# Add a legend (Note: the content 'train', 'test' is illustrative)
-plt.legend(['train', 'test'], fontsize=16)
 
 # Set figure size
 fig = plt.gcf()
@@ -57,6 +52,27 @@ ax.plot(optimal_x0, optimal_x1, 'ro', markersize=10, label='Optimal Solution')
 
 # Show the plot with the solution
 plt.legend()
+plt.show()
+
+# Create a 3D plot for the cost function
+fig_3d = plt.figure()
+ax_3d = fig_3d.add_subplot(111, projection='3d')
+
+# Plot the 3D surface plot
+ax_3d.plot_surface(X0, X1, cost, cmap='viridis', edgecolor='none', alpha=0.8)
+
+# Plot the optimal solution point in 3D
+ax_3d.scatter(optimal_x0, optimal_x1, objective_function([optimal_x0, optimal_x1]), color='r', s=100, label='Optimal Solution')
+
+# Set labels for axes
+ax_3d.set_xlabel(r'$x_{0}$', fontsize=15)
+ax_3d.set_ylabel(r'$x_{1}$', fontsize=15)
+ax_3d.set_zlabel('Cost', fontsize=15)
+
+# Add a legend to the 3D plot
+ax_3d.legend()
+
+# Show the 3D plot
 plt.show()
 
 # Print the result of the optimization
