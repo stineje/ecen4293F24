@@ -9,9 +9,10 @@ x1 = np.arange(0, 10, 0.25)
 # Create a meshgrid for the variables
 X0, X1 = np.meshgrid(x0, x1)
 
-# Define the cost function
+
 def objective_function(x):
     return 0.4 * x[0] ** 2 - 5 * x[0] + x[1] ** 2 - 6 * x[1]
+
 
 # Calculate cost using the meshgrid values
 cost = 0.4 * X0 ** 2 - 5 * X0 + X1 ** 2 - 6 * X1
@@ -23,7 +24,7 @@ fig, ax = plt.subplots(1, 1)
 cp = ax.contour(X0, X1, cost, levels=20)
 
 # Optionally add a color bar to the plot
-# fig.colorbar(cp) 
+# fig.colorbar(cp)
 
 # Set the font size for ticks
 plt.xticks(fontsize=16)
@@ -47,7 +48,8 @@ bounds = [(0, 10), (0, 10)]
 initial_guess = [0, 0]
 
 # Perform the optimization
-opt = minimize(objective_function, initial_guess, method='SLSQP', bounds=bounds)
+opt = minimize(objective_function, initial_guess,
+               method='SLSQP', bounds=bounds)
 
 # Extract the optimal solution
 optimal_x0, optimal_x1 = opt.x
@@ -57,6 +59,7 @@ ax.plot(optimal_x0, optimal_x1, 'ro', markersize=10, label='Optimal Solution')
 
 # Show the plot with the solution
 plt.legend()
+plt.savefig('unconstrained.png')
 plt.show()
 
 # Print the result of the optimization
