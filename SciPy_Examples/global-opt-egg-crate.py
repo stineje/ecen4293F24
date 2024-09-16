@@ -3,10 +3,11 @@ from scipy.optimize import differential_evolution
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-# Define the Egg Crate function
-
 
 def egg_crate(x):
+    """
+      egg crate function
+    """
     return x[0]**2 + x[1]**2 + 25 * (np.sin(x[0])**2 + np.sin(x[1])**2)
 
 

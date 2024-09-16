@@ -3,16 +3,15 @@ from scipy.optimize import differential_evolution, NonlinearConstraint
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-# Define the Michalewicz function
-
 
 def michalewicz(x, m=10):
     return -sum(np.sin(x[i]) * (np.sin((i + 1) * x[i]**2 / np.pi))**(2 * m) for i in range(len(x)))
 
-# Define a nonlinear constraint: x1^2 + x2^2 <= 5
-
 
 def constraint(x):
+    """
+      Define a nonlinear constraint: x1^2 + x2^2 <= 5  
+    """
     return 5 - (x[0]**2 + x[1]**2)
 
 
