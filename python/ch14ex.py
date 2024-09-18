@@ -10,7 +10,6 @@ ce = np.array([6.495, 6.595, 6.615, 6.635, 6.485, 6.555,
                6.565, 6.515, 6.555, 6.395, 6.775, 6.685])
 
 
-
 cebar = np.mean(ce)
 print('mean estimate = {0:5.3f}'.format(cebar))
 cemed = np.median(ce)
@@ -23,10 +22,13 @@ ces = np.std(ce, ddof=1)
 print('sample standard deviation = {0:7.5f}'.format(ces))
 
 # Compute M-estimate using Huber's method
+
+
 def huber_loss(mu, data, c=1.345):
     """ Huber loss function """
     diff = data - mu
     return np.sum(np.where(np.abs(diff) <= c, 0.5 * diff**2, c * (np.abs(diff) - 0.5 * c)))
+
 
 res = minimize(huber_loss, np.median(ce), args=(ce,))
 m_estimate = res.x[0]
@@ -44,7 +46,8 @@ for i in range(n):
 
 # Plot combined histogram and normal distribution curve
 plt.figure(figsize=(8, 6))
-plt.bar(bin_centers, hist, width=bin_width, color='w', edgecolor='k', label="Histogram")
+plt.bar(bin_centers, hist, width=bin_width,
+        color='w', edgecolor='k', label="Histogram")
 
 # Normal distribution curve
 x = np.linspace(6.39, 6.79, 100)
@@ -61,14 +64,16 @@ plt.legend()
 plt.savefig('ch14ex.png')
 plt.show()
 
+
 def S(a):
     abar = np.mean(a)
     adev = a - abar
     return np.sum(adev**2)
+
 
 cv = ces/cebar
 print('coefficient of variation = {0:5.3f} %'.format(cv*100))
 Sce = S(ce)
 print('total corrected sum of squares = {0:5.3f}'.format(Sce))
 MADce = stats.median_abs_deviation(ce)
-print('MAD = {0:5.3e}'.format(MADce))
+print('MAD = {0:5.3e}'.format(MADce/0.6745))
