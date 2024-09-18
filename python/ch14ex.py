@@ -21,9 +21,6 @@ print('sample variance = {0:7.3e}'.format(cevar))
 ces = np.std(ce, ddof=1)
 print('sample standard deviation = {0:7.5f}'.format(ces))
 
-# Compute M-estimate using Huber's method
-
-
 def huber_loss(mu, data, c=1.345):
     """ Huber loss function """
     diff = data - mu
