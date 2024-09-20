@@ -79,7 +79,7 @@ ax.text(5, 5, 'Infeasible', fontsize=20, color='black', ha='center')
 
 # Show the plot with the solution
 plt.legend()
-plt.savefig('constained.png')
+plt.savefig('constrained.png')
 plt.show()
 
 # Print the result of the optimization
