@@ -25,5 +25,5 @@ plt.title('Least Squares Fit')
 plt.legend()
 
 # Show the plot
-plt.savefig('least-square1.png')
+plt.savefig('least-square-linear1.png')
 plt.show()

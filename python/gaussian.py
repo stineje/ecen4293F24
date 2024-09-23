@@ -26,5 +26,5 @@ plt.grid(True)
 plt.legend()
 
 # Show the plot
-plt.savefig('gaussian.png')
+plt.savefig('dist-gaussian.png')
 plt.show()

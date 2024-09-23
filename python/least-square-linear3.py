@@ -47,5 +47,5 @@ plt.ylabel('y')
 plt.title('Least Squares Fit with Computed Error Bands using SciPy')
 
 # Show the plot
-plt.savefig('least-square3.png')
+plt.savefig('least-square-linear3.png')
 plt.show()

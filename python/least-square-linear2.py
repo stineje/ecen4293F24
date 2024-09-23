@@ -48,5 +48,5 @@ plt.title('Least Squares Fit using SciPy')
 plt.legend()
 
 # Show the plot
-plt.savefig('least-square2.png')
+plt.savefig('least-square-linear2.png')
 plt.show()
