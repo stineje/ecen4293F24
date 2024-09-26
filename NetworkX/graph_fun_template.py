@@ -11,7 +11,11 @@ class Graph:
         """ Build the graph from the specified file. """
             
     def shortest_path(self, source, target):
-        """ Find and return the shortest path from source to target. """
+        """ 
+            Find and return the shortest path from source to target. 
+            path : Uses NetworkX shortest_path to find shortest_path, 
+            if path is none, it should print out such. 
+        """
         try:
          
         except nx.NetworkXNoPath:
@@ -19,14 +23,23 @@ class Graph:
             return None
 
     def longest_path(self):
-        """ Find the longest path (i.e., diameter of the graph). """
+        """
+            Find and return the shortest path from source to target. 
+            path : Uses NetworkX shortest_path_length to find the longest path,
+            once identified, use the shortest_path method to indicate the path.
+            if path is none, it should print out such. 
+        """
         longest = 0
         longest_path = None
         
         return longest, longest_path
 
     def draw_graph(self, path=None):
-        """ Draw the graph with optional path highlighted. """
+        """ 
+            Draw the graph with optional path highlighted. 
+            path : A path which should be highlighted, 
+            if path is none then don't highlight anything 
+        """
         
 # Example usage
 filename = "random_graph.txt"  
