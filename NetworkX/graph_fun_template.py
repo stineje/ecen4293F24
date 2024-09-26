@@ -1,5 +1,6 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+import time
 
 class Graph:
     """ Friday Fun Day: A simple undirected graph using NetworkX. """
@@ -9,6 +10,8 @@ class Graph:
         
     def build_graph(self, filename):
         """ Build the graph from the specified file. """
+
+        # Hint:  Use a with block
             
     def shortest_path(self, source, target):
         """ 
@@ -16,6 +19,7 @@ class Graph:
             path : Uses NetworkX shortest_path to find shortest_path, 
             if path is none, it should print out such. 
         """
+        # try blocks work with things other than files :)
         try:
          
         except nx.NetworkXNoPath:
