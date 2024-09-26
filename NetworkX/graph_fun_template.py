@@ -19,7 +19,7 @@ class Graph:
             return None
 
     def longest_path(self):
-        """ Find the longest shortest path (i.e., diameter of the graph). """
+        """ Find the longest path (i.e., diameter of the graph). """
         longest = 0
         longest_path = None
         
