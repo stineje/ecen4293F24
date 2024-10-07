@@ -4,6 +4,9 @@ from scipy.sparse import csr_matrix, csc_matrix
 import time
 import matplotlib.pyplot as plt
 
+# Roofline plot
+# James Stine and Ryan Swann
+
 def compute_data_transferred(A, B, C, sparse=False, format_name=None):
     """
     Compute the total data transferred in bytes for GEMM operation.
@@ -99,6 +102,7 @@ def plot_roofline(flops_dict, ai_dict, peak_flops, bandwidth):
     plt.legend(loc='lower right')
 
     plt.grid(True)
+    plt.savefig('gemm_roofline.png')
     plt.show()
 
 # Example usage:
@@ -113,4 +117,4 @@ plot_roofline(flops_dict, ai_dict, peak_flops, bandwidth)
 for format_name in flops_dict:
     print(f"{format_name} format:")
     print(f"  FLOPS: {flops_dict[format_name]:.2e} FLOPS")
-    print(f"  Arithmetic Intensity (AI): {ai_dict[format_name]:.4f} FLOPs/Byte")
+    print(f"  Arithmetic Intensity (AI): {ai_dict[format_name]:,.4f} FLOPs/Byte")
