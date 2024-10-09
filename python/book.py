@@ -370,7 +370,7 @@ def regfal(func, xl, xu, es=1.e-7, maxit=30):
     return xm, func(xm), ea, i+1
 
 
-def gaussnaive(A,b):
+def gaussnaive(A, b):
     """
     gaussnaive: naive Gauss elimination
     input:
@@ -379,28 +379,29 @@ def gaussnaive(A,b):
     output:
     x = solution vector
     """
-    (n,m) = A.shape
-    #n = nm[0]
-    #m = nm[1]
+    (n, m) = A.shape
+    # n = nm[0]
+    # m = nm[1]
     if n != m:
         return 'Coefficient matrix A must be square'
     nb = n+1
     # build augmented matrix
-    Aug = np.hstack((A,b))
-       # forward elimination
+    Aug = np.hstack((A, b))
+    # forward elimination
     for k in range(n-1):
-        for i in range(k+1,n):
-            factor = Aug[i,k]/Aug[k,k]
-            Aug[i,k:nb]=Aug[i,k:nb]-factor*Aug[k,k:nb]
+        for i in range(k+1, n):
+            factor = Aug[i, k]/Aug[k, k]
+            Aug[i, k:nb] = Aug[i, k:nb]-factor*Aug[k, k:nb]
     # back substitution
-    x = np.zeros([n,1])  # create empty x array
+    x = np.zeros([n, 1])  # create empty x array
     x = np.matrix(x)  # convert to matrix type
-    x[n-1]=Aug[n-1,nb-1]/Aug[n-1,n-1]
-    for i in range(n-2,-1,-1):
-        x[i]=(Aug[i,nb-1]-Aug[i,i+1:n]*x[i+1:n,0])/Aug[i,i]
+    x[n-1] = Aug[n-1, nb-1]/Aug[n-1, n-1]
+    for i in range(n-2, -1, -1):
+        x[i] = (Aug[i, nb-1]-Aug[i, i+1:n]*x[i+1:n, 0])/Aug[i, i]
     return x
 
-def gausspivot(A,b):
+
+def gausspivot(A, b):
     """
     gausspivot: Gauss elimination with partial pivoting
     input:
@@ -409,34 +410,35 @@ def gausspivot(A,b):
     output:
     x = solution vector
     """
-    (n,m) = A.shape
+    (n, m) = A.shape
     if n != m:
         return 'Coefficient matrix A must be square'
     nb = n+1
     # build augmented matrix
-    Aug = np.hstack((A,b))
-       # forward elimination
+    Aug = np.hstack((A, b))
+    # forward elimination
     for k in range(n-1):
 
         # partial pivoting
-        imax = maxrow(Aug[k:n,k])
+        imax = maxrow(Aug[k:n, k])
         ipr = imax + k
         if ipr != k:  # no row swap if pivot is max
-            for j in range(k,nb):  # swap rows k and ipr
-                temp = Aug[k,j]
-                Aug[k,j] = Aug[ipr,j]
-                Aug[ipr,j] = temp
+            for j in range(k, nb):  # swap rows k and ipr
+                temp = Aug[k, j]
+                Aug[k, j] = Aug[ipr, j]
+                Aug[ipr, j] = temp
 
-        for i in range(k+1,n):
-            factor = Aug[i,k]/Aug[k,k]
-            Aug[i,k:nb]=Aug[i,k:nb]-factor*Aug[k,k:nb]
+        for i in range(k+1, n):
+            factor = Aug[i, k]/Aug[k, k]
+            Aug[i, k:nb] = Aug[i, k:nb]-factor*Aug[k, k:nb]
     # back substitution
-    x = np.zeros([n,1])  # create empty x array
+    x = np.zeros([n, 1])  # create empty x array
     x = np.matrix(x)  # convert to matrix type
-    x[n-1]=Aug[n-1,nb-1]/Aug[n-1,n-1]
-    for i in range(n-2,-1,-1):
-        x[i]=(Aug[i,nb-1]-Aug[i,i+1:n]*x[i+1:n,0])/Aug[i,i]
+    x[n-1] = Aug[n-1, nb-1]/Aug[n-1, n-1]
+    for i in range(n-2, -1, -1):
+        x[i] = (Aug[i, nb-1]-Aug[i, i+1:n]*x[i+1:n, 0])/Aug[i, i]
     return x
+
 
 def maxrow(avec):
     # function to determine the row index of the
@@ -444,10 +446,34 @@ def maxrow(avec):
     maxrowind = 0
     n = len(avec)
     amax = abs(avec[0])
-    for i in range(1,n):
+    for i in range(1, n):
         if abs(avec[i]) > amax:
             amax = avec[i]
             maxrowind = i
     return maxrowind
-   
 
+
+def tridiag(e, f, g, r):
+    """
+    tridiag: solves a set of n linear algebraic equations
+             with a tridiagonal-banded coefficient matris
+    input:
+    e = subdiagonal vector of length n, first element = 0
+    f = diagonal vector of length n
+    g = superdiagonal vector of length n, last element = 0
+    r = constant vector of length n
+    output:
+    x = solution vector of length n
+    """
+    n = len(f)
+    # forward elimination
+    x = np.zeros([n])
+    for k in range(1, n):
+        factor = e[k]/f[k-1]
+        f[k] = f[k] - factor*g[k-1]
+        r[k] = r[k] - factor*r[k-1]
+    # back substitution
+    x[n-1] = r[n-1]/f[n-1]
+    for k in range(n-2, -1, -1):
+        x[k] = (r[k] - g[k]*x[k+1])/f[k]
+    return x
