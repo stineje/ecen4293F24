@@ -19,4 +19,6 @@ x = np.linalg.solve(U, y)
 
 # Display the solution
 print("Solution vector x:")
-print(x)
+for xi in x:
+    print(f"{xi:.6f}")
+    
