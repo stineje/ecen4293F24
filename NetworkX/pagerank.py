@@ -6,8 +6,8 @@ import networkx as nx
 
 # Define the updated adjacency matrix for the social graph
 # Person A follows B and C, Person B follows C, and Person C follows A
-M = np.array([[0, 1, 1],  # A -> B, A -> C
-              [0, 0, 1],  # B -> C
+M = np.array([[0, 1, 1],   # A -> B, A -> C
+              [0, 0, 1],   # B -> C
               [1, 0, 0]])  # C -> A
 
 n = M.shape[1]  # number of people (pages)
@@ -32,7 +32,7 @@ def pagerank(M, rank, d=0.85, iterations=100, tolerance=1e-6):
 
 # Calculate custom PageRank
 final_rank = pagerank(M, rank)
-print("Final Custom PageRank:", final_rank)
+print("Final Custom PageRank:", [f"{rank:.6f}" for rank in final_rank])
 
 # Now, let's use NetworkX to compute PageRank
 G = nx.DiGraph()
