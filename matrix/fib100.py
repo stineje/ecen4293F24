@@ -1,21 +1,24 @@
-# Function to compute the nth Fibonacci number using an iterative approach
-def fibonacci(n):
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, a + b
-    return a
+import numpy as np
 
 
-def fibonacci_100_digit():
-    n = 478  # The 478th Fibonacci number is the first to have 100 digits
-    fib_n = fibonacci(n)  # Get the Fibonacci number
-    fib_str = str(fib_n)  # Convert the Fibonacci number to a string
-    formatted_fib = "{:,}".format(fib_n)  # Format with commas
-    # Return the formatted number and the 100th digit
-    return formatted_fib, fib_str[99]
+def fibonacci_matrix(n):
+    A = np.array([[1, 1],
+                  [1, 0]])
+
+    # Matrix exponentiation A^(n-1) gives us the nth Fibonacci number in the top left element
+    result = np.linalg.matrix_power(A, n-1)
+
+    # Return the top left element which is F(n)
+    return result[0, 0]
 
 
-# Output the 100th digit of the Fibonacci number with at least 100 digits
-formatted_fib, digit_100 = fibonacci_100_digit()
-print("The 478th Fibonacci number (first with 100 digits) is:\n", formatted_fib)
-print("\nThe 100th digit of this number is:", digit_100)
+# Compute the 100th Fibonacci number
+fibonacci_100 = fibonacci_matrix(100)
+
+# Format the 100th Fibonacci number with commas
+fibonacci_100_formatted = f"{fibonacci_100:,}"
+
+# Print the formatted result
+print(f"The 100th Fibonacci number is: {fibonacci_100_formatted}")
+e = (1/np.sqrt(5))*((1+np.sqrt(5))/2)**91
+print(f"{int(np.ceil(e)):,}")
