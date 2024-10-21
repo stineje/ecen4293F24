@@ -5,8 +5,6 @@ def fibonacci(n):
         a, b = b, a + b
     return a
 
-# Function to get the 100th digit of the first Fibonacci number with 100 digits
-
 
 def fibonacci_100_digit():
     n = 478  # The 478th Fibonacci number is the first to have 100 digits
