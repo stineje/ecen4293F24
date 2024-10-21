@@ -20,5 +20,3 @@ fibonacci_100_formatted = f"{fibonacci_100:,}"
 
 # Print the formatted result
 print(f"The 100th Fibonacci number is: {fibonacci_100_formatted}")
-e = (1/np.sqrt(5))*((1+np.sqrt(5))/2)**91
-print(f"{int(np.ceil(e)):,}")
