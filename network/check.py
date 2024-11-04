@@ -1,3 +1,5 @@
+import ipaddress
+
 ip = ipaddress.IPv4Address('10.203.8.126')
 network = ipaddress.IPv4Network('10.203.8.0/24')
 
