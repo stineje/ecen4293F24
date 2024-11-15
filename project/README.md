@@ -1,7 +1,7 @@
 # Project Title: Basic Machine Learning Project on FASHION-mnist Dataset
 
 ## Overview
-In this project, you will [brief description of project goals, e.g., "build a machine learning model to classify images from the MNIST dataset"]. The project will help you understand [key concepts, e.g., "data preprocessing, model training, and evaluation metrics"].
+In this project, you will build a machine learning model to classify images from the fashion MNIST dataset using prebuilt models from scikit learn and custom model using pytorch. The project will help you understand data preprocessing, model training, and evaluation metrics.
 
 ## Objectives
 - Understand and preprocess the dataset.
