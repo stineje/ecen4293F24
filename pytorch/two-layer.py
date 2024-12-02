@@ -1,14 +1,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Activation function: Sigmoid
+
 
 def sigmoid(x):
-    """ Activation Function: Sigmoid """
     return 1 / (1 + np.exp(-x))
+
+# Derivative of the sigmoid function
 
 
 def sigmoid_derivative(x):
-    """ Derivative of the Sigmoid Function """
     return x * (1 - x)
 
 
@@ -36,9 +38,10 @@ y = np.array([[0.3], [0.7], [1.0]])
 # Learning rate
 learning_rate = 0.1
 
+# Forward propagation
+
 
 def forward_propagation(X):
-    """ Forward Propagation """
     # Input to hidden layer
     z_hidden = np.dot(X, weights_input_hidden) + bias_hidden
     a_hidden = sigmoid(z_hidden)
@@ -49,9 +52,10 @@ def forward_propagation(X):
 
     return z_hidden, a_hidden, z_output, a_output
 
+# Backward propagation
+
 
 def backward_propagation(X, y, z_hidden, a_hidden, z_output, a_output):
-    """ Back Propagation """
     global weights_input_hidden, bias_hidden, weights_hidden_output, bias_output
 
     # Error in output
